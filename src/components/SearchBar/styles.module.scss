@@ -1,0 +1,27 @@
+@import "../../styles/variables";
+@import "../../styles/functions";
+
+.content {
+    @include flexCenter;
+    width: 100%;
+    gap: 5px;
+
+    & > input {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    & > div {
+        height: 35px;
+        width: 45px;
+        background-color: $cp-b2;
+        border-radius: 5px;
+        transition: $transition-short;
+        cursor: pointer;
+        @include flexCenter;
+
+        &:hover {
+            filter: brightness(1.2);
+        }
+    }
+}
