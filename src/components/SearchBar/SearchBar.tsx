@@ -11,9 +11,9 @@ interface ISearchBar {
 
 const SearchBar = (props: ISearchBar) => {
     return (
-        <div className={styles.content} data-testid="search-bar">
-            <input defaultValue={props.querySearchText ?? ""} onKeyDown={(e) => props.onEnter(e)} onChange={(e) => props.setSearchText(e.target.value)} type='text' placeholder='Pesquisar repositório' />
-            <div onClick={() => props.btnSearchClick()}>
+        <div className={styles.content}>
+            <input data-testid="search-bar" defaultValue={props.querySearchText ?? ""} onKeyDown={(e) => props.onEnter(e)} onChange={(e) => props.setSearchText(e.target.value)} type='text' placeholder='Pesquisar repositório' />
+            <div data-testid="search-button" onClick={() => props.btnSearchClick()}>
                 <Image
                     alt='lupe'
                     width={22}

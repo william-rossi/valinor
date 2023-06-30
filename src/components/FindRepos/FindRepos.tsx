@@ -5,10 +5,10 @@ import SearchBar from '../SearchBar/SearchBar';
 import styles from './styles.module.scss';
 import Card from '../Card/Card';
 import Pagination from '../Pagination/Pagination';
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation';
 
 const FindRepos = () => {
-    const searchParams = useSearchParams()
+    const searchParams = useSearchParams();
 
     const querySearchText = searchParams && searchParams.get('q');
     const queryPageNumber = Number(searchParams && searchParams.get('page'));
@@ -32,6 +32,7 @@ const FindRepos = () => {
             .then((data) => {
                 setRepoData(data.items);
                 setTotalCount(data.total_count);
+                setPageNumber(page);
                 setLoading(false);
             })
             .catch((error) => {
@@ -49,7 +50,7 @@ const FindRepos = () => {
             return;
 
         if (e.key === 'Enter') {
-            fetchGithubRepos(searchText, 1)
+            fetchGithubRepos(searchText, queryPageNumber == 0 ? 1 : queryPageNumber);
         }
     }
 
@@ -57,11 +58,12 @@ const FindRepos = () => {
         if (!isValidSearchHandle())
             return;
 
-        fetchGithubRepos(searchText, 1)
+        fetchGithubRepos(searchText, queryPageNumber == 0 ? 1 : queryPageNumber);
     }
 
     function handlePageChange(page: number) {
         setPageNumber(page);
+        fetchGithubRepos(searchText || querySearchText, page);
     }
 
     function isValidSearchHandle() {
@@ -72,7 +74,7 @@ const FindRepos = () => {
         if (isLoading)
             return <div>Carregando...</div>;
 
-        if (repoData == null || repoData == undefined)
+        if (!repoData)
             return <div>Repositório não encontrado.</div>;
 
         return repoData.map((item: any, index: number) => (
@@ -91,9 +93,9 @@ const FindRepos = () => {
         let page;
 
         if (queryPageNumber)
-            page = queryPageNumber
+            page = queryPageNumber;
         else
-            page = pageNumber
+            page = pageNumber;
 
         if (totalCount <= itemsPerPage)
             return null;
@@ -112,15 +114,15 @@ const FindRepos = () => {
             <Pagination
                 pageNumbers={pageNumbers}
                 pageNumber={pageNumber}
-                clickOnSelectedPage={(index) => { handlePageChange(index); fetchGithubRepos(searchText ? searchText : querySearchText, index) }}
+                clickOnSelectedPage={(index) => { handlePageChange(index); }}
             />
         );
     }
 
     useEffect(() => {
         if (querySearchText && queryPageNumber)
-            fetchGithubRepos(querySearchText, queryPageNumber)
-    }, [querySearchText, queryPageNumber])
+            fetchGithubRepos(querySearchText, queryPageNumber);
+    }, [querySearchText, queryPageNumber]);
 
     return (
         <div className={styles.content}>
