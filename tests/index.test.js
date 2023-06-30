@@ -9,7 +9,7 @@ describe("SearchBar", () => {
     expect(screen.getByTestId("search-bar")).toBeInTheDocument();
   });
 
-  it('Pesquisa por "node" ao clicar no botão de pesquisa e valide 10 cards', async () => {
+  it('Pesquisa por "node" ao clicar no botão de pesquisa e valida se 10 cards dos respositórios foram carregados', async () => {
     render(<Home />);
 
     const searchBar = screen.getByTestId('search-bar');
