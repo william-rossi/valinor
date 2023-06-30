@@ -19,4 +19,12 @@
             filter: brightness(1.2);
         }
     }
+
+    .currentPage {
+        background-color: $cp-b3;
+        color: $cp-b1;
+        border: 2px solid $cp-b1;
+        font-weight: bold;
+        cursor: not-allowed;
+    }
 }
