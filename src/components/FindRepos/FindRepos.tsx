@@ -13,7 +13,7 @@ const FindRepos = () => {
     const querySearchText = searchParams && searchParams.get('q');
     const queryPageNumber = Number(searchParams && searchParams.get('page'));
 
-    const [repoData, setRepoData] = useState<any[]>([]);
+    const [repoData, setRepoData] = useState<any[] | null>(null);
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [searchText, setSearchText] = useState<string>('');
     const [isLoading, setLoading] = useState<boolean>(false);
@@ -71,10 +71,13 @@ const FindRepos = () => {
     }
 
     function renderCards() {
+        if (repoData === null)
+            return <></>
+        
         if (isLoading)
             return <div>Carregando...</div>;
 
-        if (!repoData)
+        if (repoData.length === 0)
             return <div>Repositório não encontrado.</div>;
 
         return repoData.map((item: any, index: number) => (
