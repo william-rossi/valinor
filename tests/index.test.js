@@ -3,13 +3,13 @@ import SearchBar from '../src/components/SearchBar/SearchBar';
 import "@testing-library/jest-dom";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 
-describe("SearchBar", () => {
+describe("Home", () => {
   it("Renderiza a barra de pesquisa", () => {
     render(<SearchBar />);
     expect(screen.getByTestId("search-bar")).toBeInTheDocument();
   });
 
-  it('Pesquisa por "node" ao clicar no botão de pesquisa e valida se 10 cards dos respositórios foram carregados', async () => {
+  it('Busca por texto e valida quantidade de cards', async () => {
     render(<Home />);
 
     const searchBar = screen.getByTestId('search-bar');
